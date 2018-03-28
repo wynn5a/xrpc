@@ -3,7 +3,6 @@ package io.github.wynn5a.core;
 /**
  * @author Fuwenming
  * @create 2018/3/27
- *
  **/
 
 import java.io.IOException;
@@ -74,25 +73,7 @@ public class RpcCore {
             throw new IllegalArgumentException("host should not be null or empty!");
         checkPort(port);
         System.out.println("try to get remote service " + clazz.getName() + " from server " + host + ":" + port);
-        return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz}, (proxy, method, arguments) -> {
-            try (Socket socket = new Socket(host, port)) {
-                ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-                output.writeUTF(method.getName());
-                output.writeObject(method.getParameterTypes());
-                output.writeObject(arguments);
-                try {
-                    Object result = input.readObject();
-                    if (result instanceof Throwable) {
-                        throw (Throwable) result;
-                    }
-                    return result;
-                } finally {
-                    input.close();
-                    output.close();
-                }
-            }
-        });
+        return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, new RpcRemoteCaller(host, port));
     }
 
     private static void checkPort(int port) {
