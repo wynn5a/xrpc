@@ -7,15 +7,20 @@ import io.github.wynn5a.core.RpcCore;
  * @create 2018/3/27
  **/
 public class ProviderApplication {
-    public static void main(String[] args) {
-        try {
-            RpcCore.export(new HelloServiceImpl(), 1122);
-            RpcCore.export(new HelloServiceImpl(), 1123);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        while (true) {
 
-        }
+  public static void main(String[] args) {
+    try {
+      RpcCore.export(new HelloServiceImpl(), 1122);
+      RpcCore.export(new HelloServiceImpl(), 1123);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+    do {
+      try {
+        Thread.sleep(100 * 1000);
+      } catch (InterruptedException e) {
+        break;
+      }
+    } while (true);
+  }
 }
