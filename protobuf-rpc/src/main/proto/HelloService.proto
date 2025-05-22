@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package io.github.wynn5a.service;
+
+option java_package = "io.github.wynn5a.service.protobuf"; // Generated Java package
+option java_outer_classname = "HelloServiceProto"; // Outer class name for generated Java file
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greeting.
+message HelloResponse {
+  string greeting = 1;
+}

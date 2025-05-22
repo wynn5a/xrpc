@@ -2,5 +2,5 @@
 
 
 - [x] Using dynamic proxy and socket
-- [ ] Using dynamic proxy and netty
-- [ ] Using dynamic proxy, netty and ProtoBuf
+- [x] Using dynamic proxy and netty
+- [ ] Using dynamic proxy, netty and ProtoBuf (Skipped due to persistent build environment issues)
