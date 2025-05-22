@@ -8,9 +8,11 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import io.github.wynn5a.service.protobuf.HelloServiceProto; // Assuming this will be generated
 
 public class ServiceServer {
 
@@ -35,8 +37,10 @@ public class ServiceServer {
             @Override
             public void initChannel(SocketChannel ch) {
               ch.pipeline().addLast(
-                  new ObjectDecoder(1024 * 1024, ClassResolvers.cacheDisabled(null)),
-                  new ObjectEncoder(),
+                  new ProtobufVarint32FrameDecoder(),
+                  new ProtobufDecoder(HelloServiceProto.HelloRequest.getDefaultInstance()),
+                  new ProtobufVarint32LengthFieldPrepender(),
+                  new ProtobufEncoder(),
                   new RpcServerHandler(serviceImpl)
               );
             }
