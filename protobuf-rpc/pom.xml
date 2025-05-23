@@ -14,7 +14,7 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <protobuf.version>3.21.9</protobuf.version> <!-- Or a recent stable version -->
+        <protobuf.version>3.25.5</protobuf.version> <!-- Or a recent stable version -->
         <netty.version>4.1.55.Final</netty.version> <!-- Match netty-rpc's version -->
     </properties>
 
